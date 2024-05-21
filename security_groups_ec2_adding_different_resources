@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref AMIId
+      InstanceType: !Ref InstanceType
+      SecurityGroups:
+        - Ref: WebServerSecurityGroup
+      AvailabilityZone: !Ref myarea
+  MyKeyPair:
+    Type: AWS::EC2::KeyPair
+    Properties:
+      KeyName: !Ref KeyPairName
+  
+  WebServerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for the LAMP web server
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+  
+Parameters:
+  AMIId:
+    Type: String
+  InstanceType:
+    Type: String
+  myarea:
+    Type: String
+  KeyPairName:
+    Description: Name for the new EC2 Key Pair
+    Type: String
+    MinLength: '1'
+    MaxLength: '255'
+    AllowedPattern: '[a-zA-Z0-9_-]+'
+    ConstraintDescription: Must be a valid key pair name consisting of letters, numbers, hyphens, and underscores.
