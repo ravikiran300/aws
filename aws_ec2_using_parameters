@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref AMIId
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyName
+      Tags:
+        - Key: !Ref NewKey
+          Value: !Ref NewValue
+      AvailabilityZone: !Ref myarea
+
+Parameters:
+  AMIId:
+    Type: String
+  InstanceType:
+    Type: String
+  KeyName:
+    Type: String
+  NewKey:
+    Type: String
+  NewValue:
+    Type: String
+  myarea:
+    Type: String
